@@ -35,6 +35,10 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Runtime.Caching" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -44,7 +48,25 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Interface\IDataEntity.cs" />
+    <Compile Include="lib\ClassFactory.cs" />
+    <Compile Include="lib\DataBaseEntity.cs" />
+    <Compile Include="lib\DataContextFactory.cs" />
+    <Compile Include="lib\DynamicClass.cs" />
+    <Compile Include="lib\DynamicExpression.cs" />
+    <Compile Include="lib\DynamicOrdering.cs" />
+    <Compile Include="lib\DynamicProperty.cs" />
+    <Compile Include="lib\DynamicQueryable.cs" />
+    <Compile Include="lib\EntityExtensions.cs" />
+    <Compile Include="lib\ExpressionParser.cs" />
+    <Compile Include="lib\ParseException.cs" />
+    <Compile Include="lib\PropertyUtility.cs" />
+    <Compile Include="lib\Res.cs" />
+    <Compile Include="lib\Signature.cs" />
+    <Compile Include="lib\TableDefinition.cs" />
+    <Compile Include="lib\TableDefinitionCollection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SqlWebCacheManager.cs" />
+    <Compile Include="SqlRuntimeCacheManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
