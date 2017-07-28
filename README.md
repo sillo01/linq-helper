@@ -1,2 +1,2 @@
 # linq-helper
-Abstraction over Linq with cache capabilities.
+Abstraction layer over Linq with cache capabilities.
