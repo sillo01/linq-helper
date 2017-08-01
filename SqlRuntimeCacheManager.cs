@@ -12,24 +12,10 @@ namespace LinqHelper
 {
     public sealed class SqlRuntimeCacheManager
     {
-        //private static string dbName = "CachedDatabase";
         private static string ConnectionString;
         private static DataContext DataContext;
         private static SqlRuntimeCacheManager _Instance;
 
-        //public static DataBaseEntity dbEntity
-        //{
-        //    get
-        //    {
-        //        var ctx = DataContextFactory.GetScopedDataContext<DataBaseEntity>(dbName);
-        //        if (ctx.Context == null)
-        //        {
-        //            ctx.Context = DataContext;
-        //        }
-
-        //        return ctx;
-        //    }
-        //}
         public static SqlRuntimeCacheManager Instance
         {
             get
@@ -63,12 +49,10 @@ namespace LinqHelper
         public List<T> GetAllCached<T>()
             where T : class, IDataEntity
         {
-            //var tableName = dbEntity.GetTableName<T>();
             var tableName = DataContext.GetTableName<T>();
 
             List<T> result = null;
             result = (List<T>)MemoryCache.Default.Get(tableName);
-
 
             if (result == null)
             {
@@ -84,7 +68,6 @@ namespace LinqHelper
                         SqlDependency dep = new SqlDependency();
                         dep.AddCommandDependency(cmd);
 
-                        //MemoryCache.Default.Set(table, value, policy);
                         var policy = new CacheItemPolicy()
                         {
                             AbsoluteExpiration = ObjectCache.InfiniteAbsoluteExpiration,
