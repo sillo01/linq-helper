@@ -5,31 +5,31 @@ using System.Linq.Dynamic;
 using System.Data.Linq;
 using System.Runtime.Caching;
 using System.Data.SqlClient;
+using LinqHelper.Extension;
 
 namespace LinqHelper
 
 {
     public sealed class SqlRuntimeCacheManager
     {
-        private static string dbName = "CachedDatabase";
+        //private static string dbName = "CachedDatabase";
         private static string ConnectionString;
-        private static DataContext _DataContext;
+        private static DataContext DataContext;
         private static SqlRuntimeCacheManager _Instance;
-        private static HashSet<string> _RegisteredTables;
 
-        public static DataBaseEntity dbEntity
-        {
-            get
-            {
-                var ctx = DataContextFactory.GetScopedDataContext<DataBaseEntity>(dbName);
-                if (ctx.Context == null)
-                {
-                    ctx.Context = _DataContext;
-                }
+        //public static DataBaseEntity dbEntity
+        //{
+        //    get
+        //    {
+        //        var ctx = DataContextFactory.GetScopedDataContext<DataBaseEntity>(dbName);
+        //        if (ctx.Context == null)
+        //        {
+        //            ctx.Context = DataContext;
+        //        }
 
-                return ctx;
-            }
-        }
+        //        return ctx;
+        //    }
+        //}
         public static SqlRuntimeCacheManager Instance
         {
             get
@@ -43,12 +43,11 @@ namespace LinqHelper
         public static void GenerateInstance(DataContext Context)
         {
             _Instance = new SqlRuntimeCacheManager(Context);
-            _RegisteredTables = new HashSet<string>();
         }
         private SqlRuntimeCacheManager(DataContext Context)
         {
             SqlRuntimeCacheManager.ConnectionString = Context.Connection.ConnectionString;
-            _DataContext = Context;
+            DataContext = Context;
         }
 
         // SQL Dependencies
@@ -64,7 +63,8 @@ namespace LinqHelper
         public List<T> GetAllCached<T>()
             where T : class, IDataEntity
         {
-            var tableName = dbEntity.GetTableName<T>();
+            //var tableName = dbEntity.GetTableName<T>();
+            var tableName = DataContext.GetTableName<T>();
 
             List<T> result = null;
             result = (List<T>)MemoryCache.Default.Get(tableName);
@@ -78,7 +78,7 @@ namespace LinqHelper
                     {
                         conn.Open();
                         cmd.Connection = conn;
-                        cmd.CommandText = dbEntity.Context.GetCommand(dbEntity.Context.GetTable<T>()).CommandText;
+                        cmd.CommandText = DataContext.GetCommand(DataContext.GetTable<T>()).CommandText;
                         cmd.Notification = null;
 
                         SqlDependency dep = new SqlDependency();
@@ -98,7 +98,7 @@ namespace LinqHelper
                         SqlChangeMonitor mon = new SqlChangeMonitor(dep);
                         policy.ChangeMonitors.Add(mon);
 
-                        result = dbEntity.Context.Translate<T>(cmd.ExecuteReader()).ToList();
+                        result = DataContext.Translate<T>(cmd.ExecuteReader()).ToList();
                         MemoryCache.Default.Set(tableName, result, policy);
                     }
                 }
