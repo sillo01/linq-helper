@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extension\DataContext.cs" />
     <Compile Include="Interface\IDataEntity.cs" />
     <Compile Include="lib\ClassFactory.cs" />
     <Compile Include="lib\DataBaseEntity.cs" />

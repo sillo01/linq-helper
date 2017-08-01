@@ -5,6 +5,7 @@ using System.Linq.Dynamic;
 using System.Data.Linq;
 using System.Runtime.Caching;
 using System.Data.SqlClient;
+using LinqHelper.Extension;
 
 namespace LinqHelper
 
@@ -64,7 +65,8 @@ namespace LinqHelper
         public List<T> GetAllCached<T>()
             where T : class, IDataEntity
         {
-            var tableName = dbEntity.GetTableName<T>();
+            //var tableName = dbEntity.GetTableName<T>();
+            var tableName = _DataContext.GetTableName<T>();
 
             List<T> result = null;
             result = (List<T>)MemoryCache.Default.Get(tableName);
