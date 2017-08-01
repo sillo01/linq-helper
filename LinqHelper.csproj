@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Context\TableDefinition.cs" />
     <Compile Include="Extension\DataContext.cs" />
     <Compile Include="Interface\IDataEntity.cs" />
     <Compile Include="old-lib\ClassFactory.cs" />
@@ -72,5 +73,6 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
