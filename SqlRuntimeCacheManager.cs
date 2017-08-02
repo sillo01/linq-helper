@@ -12,7 +12,7 @@ namespace LinqHelper
 {
     public sealed class SqlRuntimeCacheManager
     {
-        private static string ConnectionString;
+        //private static string ConnectionString;
         private static DataContext DataContext;
         private static SqlRuntimeCacheManager _Instance;
 
@@ -23,7 +23,13 @@ namespace LinqHelper
                 return _Instance;
             }
         }
-        private HashSet<string> RegisteredTables { get; }
+        private string ConnectionString
+        {
+            get
+            {
+                return DataContext.Connection.ConnectionString;
+            }
+        }
 
         // Initialization
         public static void GenerateInstance(DataContext Context)
@@ -32,7 +38,6 @@ namespace LinqHelper
         }
         private SqlRuntimeCacheManager(DataContext Context)
         {
-            SqlRuntimeCacheManager.ConnectionString = Context.Connection.ConnectionString;
             DataContext = Context;
         }
 
