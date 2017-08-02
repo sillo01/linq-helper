@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Dynamic;
+
 using System.Data.Linq;
 using System.Runtime.Caching;
 using System.Data.SqlClient;
 using LinqHelper.Extension;
+using LinqHelper.Context;
 
 namespace LinqHelper
 
@@ -54,7 +55,7 @@ namespace LinqHelper
         public List<T> GetAllCached<T>()
             where T : class, IDataEntity
         {
-            var tableName = DataContext.GetTableName<T>();
+            var tableName = TableDefinitionCollection.GetTableName(typeof(T), DataContext);
 
             List<T> result = null;
             result = (List<T>)MemoryCache.Default.Get(tableName);
@@ -67,7 +68,7 @@ namespace LinqHelper
                     {
                         conn.Open();
                         cmd.Connection = conn;
-                        cmd.CommandText = DataContext.GetCommand(DataContext.GetTable<T>()).CommandText;
+                        cmd.CommandText = TableDefinitionCollection.GetTableCommand(typeof(T), DataContext);
                         cmd.Notification = null;
 
                         SqlDependency dep = new SqlDependency();

@@ -1,17 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.Linq;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LinqHelper.Context
 {
     public class TableDefinition
     {
         private readonly Type _type;
-        public string TableName;
-        public string CommandText;
+        public string TableName { get; set; }
+        public string CommandText { get; set; }
 
         public TableDefinition(System.Type type, DataContext context)
         {
