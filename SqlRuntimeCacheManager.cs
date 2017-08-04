@@ -14,6 +14,7 @@ namespace Guayaba.LinqHelper
         //private static string ConnectionString;
         private static DataContext DataContext;
         private static SqlRuntimeCacheManager _Instance;
+        private static string _ConnectionString;
 
         public static SqlRuntimeCacheManager Instance
         {
@@ -26,7 +27,7 @@ namespace Guayaba.LinqHelper
         {
             get
             {
-                return DataContext.Connection.ConnectionString;
+                return _ConnectionString;
             }
         }
 
@@ -34,6 +35,7 @@ namespace Guayaba.LinqHelper
         public static void GenerateInstance(DataContext Context)
         {
             _Instance = new SqlRuntimeCacheManager(Context);
+            _ConnectionString = Context.Connection.ConnectionString;
         }
         private SqlRuntimeCacheManager(DataContext Context)
         {
