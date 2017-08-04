@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Guayaba.LinqHelper</id>
+    <version>1.0.0.0</version>
+    <title>LinqHelper</title>
+    <authors>sillo01</authors>
+    <owners>sillo01</owners>
+    <licenseUrl>https://raw.githubusercontent.com/sillo01/linq-helper/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/sillo01/linq-helper</projectUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>Abstraction layer over Linq with cache capabilities.</description>
+    <releaseNotes>First release.</releaseNotes>
+    <copyright>Copyright 2017</copyright>
+    <tags>cache linq</tags>
+  </metadata>
+</package>

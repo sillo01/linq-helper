@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-
 using System.Data.Linq;
 using System.Runtime.Caching;
 using System.Data.SqlClient;
-using LinqHelper.Extension;
-using LinqHelper.Context;
+using Guayaba.LinqHelper.Context;
 
-namespace LinqHelper
+namespace Guayaba.LinqHelper
 
 {
     public sealed class SqlRuntimeCacheManager
@@ -16,6 +14,7 @@ namespace LinqHelper
         //private static string ConnectionString;
         private static DataContext DataContext;
         private static SqlRuntimeCacheManager _Instance;
+        private static string _ConnectionString;
 
         public static SqlRuntimeCacheManager Instance
         {
@@ -28,7 +27,7 @@ namespace LinqHelper
         {
             get
             {
-                return DataContext.Connection.ConnectionString;
+                return _ConnectionString;
             }
         }
 
@@ -36,6 +35,7 @@ namespace LinqHelper
         public static void GenerateInstance(DataContext Context)
         {
             _Instance = new SqlRuntimeCacheManager(Context);
+            _ConnectionString = Context.Connection.ConnectionString;
         }
         private SqlRuntimeCacheManager(DataContext Context)
         {

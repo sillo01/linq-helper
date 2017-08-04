@@ -51,24 +51,7 @@
     <Compile Include="Context\TableDefinitionCollection.cs" />
     <Compile Include="Extension\DataContext.cs" />
     <Compile Include="Interface\IDataEntity.cs" />
-    <Compile Include="old-lib\ClassFactory.cs" />
-    <Compile Include="old-lib\DataBaseEntity.cs" />
-    <Compile Include="old-lib\DataContextFactory.cs" />
-    <Compile Include="old-lib\DynamicClass.cs" />
-    <Compile Include="old-lib\DynamicExpression.cs" />
-    <Compile Include="old-lib\DynamicOrdering.cs" />
-    <Compile Include="old-lib\DynamicProperty.cs" />
-    <Compile Include="old-lib\DynamicQueryable.cs" />
-    <Compile Include="old-lib\EntityExtensions.cs" />
-    <Compile Include="old-lib\ExpressionParser.cs" />
-    <Compile Include="old-lib\ParseException.cs" />
-    <Compile Include="old-lib\PropertyUtility.cs" />
-    <Compile Include="old-lib\Res.cs" />
-    <Compile Include="old-lib\Signature.cs" />
-    <Compile Include="old-lib\TableDefinition.cs" />
-    <Compile Include="old-lib\TableDefinitionCollection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SqlWebCacheManager.cs" />
     <Compile Include="SqlRuntimeCacheManager.cs" />
   </ItemGroup>
   <ItemGroup>

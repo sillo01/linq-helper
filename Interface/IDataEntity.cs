@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace LinqHelper
+namespace Guayaba.LinqHelper
 {
     public interface IDataEntity
     {

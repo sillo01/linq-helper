@@ -1,6 +1,6 @@
 ﻿using System.Data.Linq;
 
-namespace LinqHelper.Extension
+namespace Guayaba.LinqHelper.Extension
 {
     public static class DataContextEx
     {
