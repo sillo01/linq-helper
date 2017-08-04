@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Data.Linq;
 
-namespace LinqHelper.Context
+namespace Guayaba.LinqHelper.Context
 {
     public class TableDefinition
     {

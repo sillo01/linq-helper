@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Linq;
 
-namespace LinqHelper.Context
+namespace Guayaba.LinqHelper.Context
 {
     public class TableDefinitionCollection : Dictionary<System.Type, TableDefinition>
     {

@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-
 using System.Data.Linq;
 using System.Runtime.Caching;
 using System.Data.SqlClient;
-using LinqHelper.Extension;
-using LinqHelper.Context;
+using Guayaba.LinqHelper.Context;
 
-namespace LinqHelper
+namespace Guayaba.LinqHelper
 
 {
     public sealed class SqlRuntimeCacheManager
