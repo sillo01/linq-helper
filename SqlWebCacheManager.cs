@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Caching;
 using System.Linq.Dynamic;
 using System.Data.Linq;
+using LinqHelper.Old;
 
 
 namespace LinqHelper

@@ -3,7 +3,7 @@ using System.Data.Linq;
 using System.Threading;
 using System.Web;
 
-namespace LinqHelper
+namespace LinqHelper.Old
 {
     public class DataContextFactory
     {
