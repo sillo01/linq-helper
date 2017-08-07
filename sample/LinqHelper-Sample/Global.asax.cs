@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Http;
 using System.Web.Routing;
+using DataLayer;
 
 namespace LinqHelper_Sample
 {
@@ -12,6 +13,7 @@ namespace LinqHelper_Sample
         protected void Application_Start()
         {
             GlobalConfiguration.Configure(WebApiConfig.Register);
+            SampleEntitiesDataContext.RegisterDependency();
         }
     }
 }

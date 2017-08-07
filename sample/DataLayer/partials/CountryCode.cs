@@ -11,12 +11,21 @@ namespace DataLayer
     {
         public string Id { get { return IdCountryCode.ToString(); } }
 
-        public List<CountryCode> Cached
+        public static List<CountryCode> Cached
         {
             get
             {
                 return LinqHelper.Instance.GetAllCached<CountryCode>();
             }
+        }
+
+        public CountryCode Get()
+        {
+            return LinqHelper.Instance.SelectByPK<CountryCode>(Id);
+        }
+        public CountryCode Save(bool submit = false)
+        {
+            return LinqHelper.Instance.InserOrUpdate(this, submit);
         }
     }
 }
