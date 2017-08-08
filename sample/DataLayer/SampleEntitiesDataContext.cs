@@ -1,4 +1,5 @@
 ﻿using Guayaba.LinqHelper;
+using System.Linq;
 using System.Runtime.Caching;
 
 namespace DataLayer
@@ -12,7 +13,14 @@ namespace DataLayer
                 SampleEntitiesDataContext ctx = (SampleEntitiesDataContext)MemoryCache.Default["DataContextDataContext"];
                 if (ctx == null)
                 {
-                    ctx = new SampleEntitiesDataContext();
+                    string executionPath = System.IO.Path.GetDirectoryName(
+                        System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase)
+                        .Replace("file:\\", "")
+                        .Replace("LinqHelper-Sample\\bin", "DataLayer");
+
+                    string connectionString = string.Format(_connectionString, executionPath);
+
+                    ctx = new SampleEntitiesDataContext(connectionString);
                     CacheItemPolicy policy = new CacheItemPolicy();
                     MemoryCache.Default.Set("DataContextDataContext", ctx, policy);
                 }
@@ -24,5 +32,7 @@ namespace DataLayer
             LinqHelper.GenerateInstance(Current);
             LinqHelper.Instance.RegisterDependency();
         }
+
+        private const string _connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename={0}\sampleDB.mdf;Integrated Security=True;Connect Timeout=30";
     }
 }
