@@ -27,5 +27,10 @@ namespace DataLayer
         {
             return LinqHelper.Instance.InserOrUpdate(this, submit);
         }
+
+        public async Task<CountryCode> GetAsync()
+        {
+            return await LinqHelper.Instance.SelectByPKAsync<CountryCode>(this.Id);
+        }
     }
 }

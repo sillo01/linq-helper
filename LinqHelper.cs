@@ -8,6 +8,10 @@ using Guayaba.LinqHelper.Context;
 using System.Data.Linq.Mapping;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Threading.Tasks;
+using System.Threading;
+using System.Data;
+using System.Linq.Expressions;
 
 namespace Guayaba.LinqHelper
 
@@ -55,6 +59,7 @@ namespace Guayaba.LinqHelper
             SqlDependency.Stop(ConnectionString);
         }
 
+        // Synchronous methods
         public List<T> GetAllCached<T>()
             where T : class, IDataEntity
         {
@@ -75,16 +80,29 @@ namespace Guayaba.LinqHelper
             var table = DataContext.GetTable<T>();
             MetaModel modelMap = DataContext.Mapping;
 
-            //Obtieme proriedades de la entidad
             ReadOnlyCollection<MetaDataMember> dataMembers = modelMap.GetMetaType(typeof(T)).DataMembers;
-
             string PrimaryKeyName = (dataMembers.FirstOrDefault<MetaDataMember>(m => m.IsPrimaryKey)).Name;
 
-            return table.FirstOrDefault<T>(delegate (T t)
+            //return table.FirstOrDefault<T>(delegate (T t)
+            //{
+            //    String memberId = t.GetType().GetProperty(PrimaryKeyName).GetValue(t, null).ToString();
+            //    return memberId == id.ToString();
+            //});
+
+            string tableCmd = TableDefinitionCollection.GetTableCommand(typeof(T), DataContext);
+            string strCmd = tableCmd + " WHERE " + PrimaryKeyName + " = @id;";
+            using (var conn = new SqlConnection(DataContext.Connection.ConnectionString))
             {
-                String memberId = t.GetType().GetProperty(PrimaryKeyName).GetValue(t, null).ToString();
-                return memberId.ToString() == id.ToString();
-            });
+                using (var cmd = new SqlCommand(strCmd, conn))
+                {
+                    cmd.Parameters.Add("@id", SqlDbType.Int);
+                    cmd.Parameters["@id"].Value = int.Parse(id);
+
+                    conn.Open();
+                    var reader = cmd.ExecuteReader();
+                    return DataContext.Translate<T>(reader).FirstOrDefault();
+                }
+            }
         }
         public T InserOrUpdate<T>(T item, bool submit = false)
             where T : class, IDataEntity
@@ -125,6 +143,31 @@ namespace Guayaba.LinqHelper
 
             if (submit) DataContext.SubmitChanges();
             return item;
+        }
+
+        // Async methods
+        public async Task<T> SelectByPKAsync<T>(string id, CancellationToken token = default(CancellationToken)) where T : class
+        {
+            var table = DataContext.GetTable<T>();
+            MetaModel modelMap = DataContext.Mapping;
+
+            ReadOnlyCollection<MetaDataMember> dataMembers = modelMap.GetMetaType(typeof(T)).DataMembers;
+            string PrimaryKeyName = (dataMembers.FirstOrDefault<MetaDataMember>(m => m.IsPrimaryKey)).Name;
+
+            string tableCmd = TableDefinitionCollection.GetTableCommand(typeof(T), DataContext);
+            string strCmd = tableCmd + " WHERE " + PrimaryKeyName + " = @id;";
+            using (var conn = new SqlConnection(DataContext.Connection.ConnectionString))
+            {
+                using (var cmd = new SqlCommand(strCmd, conn))
+                {
+                    cmd.Parameters.Add("@id", SqlDbType.Int);
+                    cmd.Parameters["@id"].Value = int.Parse(id);
+
+                    await conn.OpenAsync(token);
+                    var reader = await cmd.ExecuteReaderAsync(token);
+                    return DataContext.Translate<T>(reader).FirstOrDefault();
+                }
+            }
         }
 
         // private methods
