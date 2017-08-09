@@ -75,6 +75,7 @@ namespace Guayaba.LinqHelper
 
             return result;
         }
+
         public T SelectByPK<T>(string id) where T : class
         {
             var table = DataContext.GetTable<T>();
@@ -91,7 +92,7 @@ namespace Guayaba.LinqHelper
 
             string tableCmd = TableDefinitionCollection.GetTableCommand(typeof(T), DataContext);
             string strCmd = tableCmd + " WHERE " + PrimaryKeyName + " = @id;";
-            using (var conn = new SqlConnection(DataContext.Connection.ConnectionString))
+            using (var conn = new SqlConnection(ConnectionString))
             {
                 using (var cmd = new SqlCommand(strCmd, conn))
                 {
@@ -156,7 +157,7 @@ namespace Guayaba.LinqHelper
 
             string tableCmd = TableDefinitionCollection.GetTableCommand(typeof(T), DataContext);
             string strCmd = tableCmd + " WHERE " + PrimaryKeyName + " = @id;";
-            using (var conn = new SqlConnection(DataContext.Connection.ConnectionString))
+            using (var conn = new SqlConnection(ConnectionString))
             {
                 using (var cmd = new SqlCommand(strCmd, conn))
                 {
