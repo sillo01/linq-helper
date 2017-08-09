@@ -105,7 +105,7 @@ namespace Guayaba.LinqHelper
                 }
             }
         }
-        public T InserOrUpdate<T>(T item, bool submit = false)
+        public T InsertOrUpdate<T>(T item, bool submit = false)
             where T : class, IDataEntity
         {
             bool isNew = (item.Id == "0" || string.IsNullOrEmpty(item.Id));
