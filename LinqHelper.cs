@@ -75,6 +75,11 @@ namespace Guayaba.LinqHelper
 
             return result;
         }
+        public object RemoveCached<T>(T type)
+        {
+            string tableName = TableDefinitionCollection.GetTableName(typeof(T), DataContext);
+            return MemoryCache.Default.Remove(tableName);
+        }
 
         public T SelectByPK<T>(string id) where T : class
         {
