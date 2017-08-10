@@ -84,26 +84,26 @@ namespace Guayaba.LinqHelper
             ReadOnlyCollection<MetaDataMember> dataMembers = modelMap.GetMetaType(typeof(T)).DataMembers;
             string PrimaryKeyName = (dataMembers.FirstOrDefault<MetaDataMember>(m => m.IsPrimaryKey)).Name;
 
-            //return table.FirstOrDefault<T>(delegate (T t)
-            //{
-            //    String memberId = t.GetType().GetProperty(PrimaryKeyName).GetValue(t, null).ToString();
-            //    return memberId == id.ToString();
-            //});
-
-            string tableCmd = TableDefinitionCollection.GetTableCommand(typeof(T), DataContext);
-            string strCmd = tableCmd + " WHERE " + PrimaryKeyName + " = @id;";
-            using (var conn = new SqlConnection(ConnectionString))
+            return table.FirstOrDefault<T>(delegate (T t)
             {
-                using (var cmd = new SqlCommand(strCmd, conn))
-                {
-                    cmd.Parameters.Add("@id", SqlDbType.Int);
-                    cmd.Parameters["@id"].Value = int.Parse(id);
+                String memberId = t.GetType().GetProperty(PrimaryKeyName).GetValue(t, null).ToString();
+                return memberId == id.ToString();
+            });
 
-                    conn.Open();
-                    var reader = cmd.ExecuteReader();
-                    return DataContext.Translate<T>(reader).FirstOrDefault();
-                }
-            }
+            //string tableCmd = TableDefinitionCollection.GetTableCommand(typeof(T), DataContext);
+            //string strCmd = tableCmd + " WHERE " + PrimaryKeyName + " = @id;";
+            //using (var conn = new SqlConnection(ConnectionString))
+            //{
+            //    using (var cmd = new SqlCommand(strCmd, conn))
+            //    {
+            //        cmd.Parameters.Add("@id", SqlDbType.Int);
+            //        cmd.Parameters["@id"].Value = int.Parse(id);
+
+            //        conn.Open();
+            //        var reader = cmd.ExecuteReader();
+            //        return DataContext.Translate<T>(reader).FirstOrDefault();
+            //    }
+            //}
         }
         public T InsertOrUpdate<T>(T item, bool submit = false)
             where T : class, IDataEntity
