@@ -177,7 +177,7 @@ namespace Guayaba.LinqHelper
         }
 
         // private methods
-        private List<T> RegisterDependency<T>(string tableName)
+        internal List<T> RegisterDependency<T>(string tableName)
         {
             List<T> result = null;
             using (var conn = new SqlConnection(ConnectionString))
