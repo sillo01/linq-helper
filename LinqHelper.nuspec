@@ -2,15 +2,15 @@
 <package >
   <metadata>
     <id>Guayaba.LinqHelper</id>
-    <version>1.2.0.0</version>
+    <version>1.3.0.0</version>
     <title>LinqHelper</title>
     <authors>sillo01</authors>
     <owners>sillo01</owners>
     <licenseUrl>https://raw.githubusercontent.com/sillo01/linq-helper/master/LICENSE</licenseUrl>
     <projectUrl>https://github.com/sillo01/linq-helper</projectUrl>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
-    <description>Abstraction layer over Linq with cache capabilities. Now with async capabilities.</description>
-    <releaseNotes>Select by PK async method.</releaseNotes>
+    <description>Abstraction layer over Linq with cache capabilities. Now with async capabilities (experimental).</description>
+    <releaseNotes>Async API still in experimental state. Removed IDataEntity interface, less boiler plate code. Added a method for removing a table from cache</releaseNotes>
     <copyright>Copyright 2017</copyright>
     <tags>cache linq</tags>
   </metadata>
