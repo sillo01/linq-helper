@@ -1,4 +1,7 @@
-﻿using System.Data.Linq;
+﻿using System;
+using System.ComponentModel;
+using System.Data.Linq;
+using System.Linq;
 
 namespace Guayaba.LinqHelper.Extension
 {
@@ -20,6 +23,16 @@ namespace Guayaba.LinqHelper.Extension
                 }
             }
             return tableName;
+        }
+        public static string GetPKValue<T>(this DataContext context, T item)
+        {
+            Type type = typeof(T);
+            PropertyDescriptorCollection properties = TypeDescriptor.GetProperties(item);
+            var table = context.Mapping.GetTable(type);
+            var members = table.RowType.DataMembers;
+            var key = members.Where(x => x.IsPrimaryKey == true).FirstOrDefault();
+            var pk = properties.Find(key.Name, true);
+            return pk.GetValue(item).ToString();
         }
     }
 }

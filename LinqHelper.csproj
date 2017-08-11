@@ -52,13 +52,14 @@
     <Compile Include="Context\TableDefinition.cs" />
     <Compile Include="Context\TableDefinitionCollection.cs" />
     <Compile Include="Extension\DataContext.cs" />
-    <Compile Include="Interface\IDataEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="LinqHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Interface\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

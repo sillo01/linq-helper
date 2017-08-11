@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using System.Data;
 using System.Linq.Expressions;
+using Guayaba.LinqHelper.Extension;
 
 namespace Guayaba.LinqHelper
 
@@ -61,7 +62,7 @@ namespace Guayaba.LinqHelper
 
         // Synchronous methods
         public List<T> GetAllCached<T>()
-            where T : class, IDataEntity
+            where T : class
         {
             var tableName = TableDefinitionCollection.GetTableName(typeof(T), DataContext);
 
@@ -94,26 +95,13 @@ namespace Guayaba.LinqHelper
                 String memberId = t.GetType().GetProperty(PrimaryKeyName).GetValue(t, null).ToString();
                 return memberId == id.ToString();
             });
-
-            //string tableCmd = TableDefinitionCollection.GetTableCommand(typeof(T), DataContext);
-            //string strCmd = tableCmd + " WHERE " + PrimaryKeyName + " = @id;";
-            //using (var conn = new SqlConnection(ConnectionString))
-            //{
-            //    using (var cmd = new SqlCommand(strCmd, conn))
-            //    {
-            //        cmd.Parameters.Add("@id", SqlDbType.Int);
-            //        cmd.Parameters["@id"].Value = int.Parse(id);
-
-            //        conn.Open();
-            //        var reader = cmd.ExecuteReader();
-            //        return DataContext.Translate<T>(reader).FirstOrDefault();
-            //    }
-            //}
         }
         public T InsertOrUpdate<T>(T item, bool submit = false)
-            where T : class, IDataEntity
+            where T : class
         {
-            bool isNew = (item.Id == "0" || string.IsNullOrEmpty(item.Id));
+            //bool isNew = (item.Id == "0" || string.IsNullOrEmpty(item.Id));
+            string Id = DataContext.GetPKValue(item);
+            bool isNew = (Id == "0" || string.IsNullOrEmpty(Id));
 
             if (isNew)
             {
@@ -129,13 +117,14 @@ namespace Guayaba.LinqHelper
                 var members = table.RowType.DataMembers;
                 var key = members.Where(x => x.IsPrimaryKey == true).FirstOrDefault();
 
-                string predicate = "";
-                if (key != null)
-                {
-                    predicate = (key.Name != null ? string.Format("{0}=@0", key.Name) : "");
-                }
+                //string predicate = "";
+                //if (key != null)
+                //{
+                //    predicate = (key.Name != null ? string.Format("{0}=@0", key.Name) : "");
+                //}
 
-                var updated = SelectByPK<T>(item.Id);
+                //var updated = SelectByPK<T>(item.Id);
+                var updated = SelectByPK<T>(Id);
 
                 foreach (PropertyDescriptor currentProp in properties)
                 {
